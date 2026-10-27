@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified EU Community | Live Access Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #8b5cf6 50%, #3b82f6 100%);
+            --accent-glow: rgba(244, 63, 94, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(244, 63, 94, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 45%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 32px 24px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Live Indicator Bar */
+        .live-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #34d399;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.35;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 26px;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 16px 18px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .option-btn i {
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: transform 0.2s;
+        }
+
+        .option-btn:hover i {
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        /* Loading Screen State */
+        .loading-box {
+            padding: 24px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            border-top: 3px solid #f43f5e;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #f43f5e;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            margin-top: 28px;
+            font-size: 10px;
+            color: #6b7280;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Live Status Bar -->
+        <div class="live-bar">
+            <div class="pulse-dot"></div>
+            <span id="live-counter">3,420+ Active Users Online</span>
+        </div>
+
+        <!-- STEP 1: Pilihan Interaktif Pertama -->
+        <div class="step active" id="step-1">
+            <h2>What kind of connection are you looking for tonight?</h2>
+            <p>Select an option to filter verified active profiles in your region.</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="nextStep(2)">
+                    <span>Casual Chat & Local Meet</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="option-btn" onclick="nextStep(2)">
+                    <span>Late Night Private Chats</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="option-btn" onclick="nextStep(2)">
+                    <span>Open Dating Profiles</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Verifikasi Akses / Usia -->
+        <div class="step" id="step-2">
+            <h2>Region & Age Verification Required</h2>
+            <p>This community contains adult content. You must confirm to proceed.</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="startLoading()">
+                    <span>I am 18 Years or Older (Enter)</span>
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button class="option-btn" onclick="startLoading()">
+                    <span>Exit Portal</span>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Proses Simulasi Server & Redirect -->
+        <div class="step" id="step-3">
+            <div class="loading-box">
+                <div class="spinner"></div>
+                <div class="loading-text" id="load-status">Connecting to secure EU gateway...</div>
+                <p>Matching active profiles near your IP location...</p>
+            </div>
+        </div>
+
+        <footer>
+            Strictly 18+ &bull; Secure Encrypted Connection &bull; GDPR Compliant Vibe
+        </footer>
+    </div>
+
+    <script>
+        // Link CPA Target Anda
+        const cpaTargetUrl = "https://safeoffers.pro/a/J6Ep0Co1yHz3O0";
+
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step-' + stepNumber).classList.add('active');
+        }
+
+        function startLoading() {
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step-3').classList.add('active');
+
+            // Simulasi urutan teks loading tingkat tinggi
+            setTimeout(() => {
+                document.getElementById('load-status').innerText = "Verifying regional availability...";
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('load-status').innerText = "Profiles unlocked! Redirecting...";
+            }, 2000);
+
+            // Eksekusi redirect otomatis ke link CPA setelah 2.8 detik
+            setTimeout(() => {
+                window.location.href = cpaTargetUrl;
+            }, 2800);
+        }
+    </script>
+
+</body>
+</html>
