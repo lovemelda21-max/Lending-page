@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penawaran Spesial</title>
+    <title>Special Offer</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,7 +58,7 @@
         <h1>💕WELCOME BABY💕</h1>
         <p> 👇👇👇 </p>
         
-        <!-- Tombol Utama -->
+        <!-- Main Button -->
         <a href="#" id="openBrowserBtn" class="btn">CONTINUE</a>
     </div>
 
@@ -66,25 +66,25 @@
         document.getElementById('openBrowserBtn').addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Tautan tujuan Anda
+            // Your target URL
             const targetUrl = "https://safeoffers.pro/a/82XZjfkKqF2YwQ"; 
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-            // Deteksi apakah pengguna membuka dari Instagram / Facebook In-App Browser
+            // Detect if opened from Instagram / Facebook In-App Browser
             if (userAgent.indexOf('Instagram') > -1 || userAgent.indexOf('FBAN') > -1 || userAgent.indexOf('FBAV') > -1) {
                 
                 if (/android/i.test(userAgent)) {
-                    // Trik untuk Android: Memaksa buka via Intent Chrome
+                    // Android trick: Force open via Chrome Intent
                     window.location.href = "intent://" + targetUrl.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end;";
                 } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    // Trik untuk iOS / iPhone: Memberikan instruksi titik tiga (⋯) karena pembatasan ketat Safari
-                    alert("Silakan ketuk ikon titik tiga (⋯) di pojok kanan atas, lalu pilih 'Buka di Browser' untuk melanjutkan.");
+                    // iOS / iPhone trick: Instruction to tap three dots (⋯)
+                    alert("Please tap the three dots icon (⋯) in the top right corner, then select 'Open in Browser' to continue.");
                     window.location.href = targetUrl;
                 } else {
                     window.location.href = targetUrl;
                 }
             } else {
-                // Jika sudah di browser biasa (Chrome/Safari), langsung buka link
+                // If already in a standard browser (Chrome/Safari), open directly
                 window.location.href = targetUrl;
             }
         });
