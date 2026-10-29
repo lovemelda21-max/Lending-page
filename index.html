@@ -1,163 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Special Offer</title>
+    <title>Experience Fullscreen Video</title>
     <style>
-        * {
+        /* CSS Reset & Modern Box-Sizing */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #311042, #4a044e);
-            background-size: 400% 400%;
-            animation: gradientBG 12s ease infinite;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            /* Mencegah teks diseleksi sembarangan */
-            user-select: none; 
-            -webkit-user-select: none;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            padding: 40px 30px;
-            max-width: 420px;
+
+        html, body {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .pulsing-icon {
-            font-size: 42px;
-            margin-bottom: 12px;
-            animation: pulseIcon 1.5s infinite;
-        }
-        @keyframes pulseIcon {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-        h1 {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            background: linear-gradient(92deg, #ff758c 0%, #ff7eb3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .urgency-text {
-            font-size: 13px;
-            color: #ffeb3b;
-            margin-bottom: 20px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-        .arrow-box {
-            font-size: 20px;
-            margin: 10px 0 25px 0;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
-        }
-        .btn {
-            display: block;
-            background: linear-gradient(135deg, #ff3366 0%, #ff6b6b 100%);
-            color: white;
-            padding: 16px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 0.8px;
-            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
+            height: 100%;
             overflow: hidden;
+            background-color: #030305;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(255, 51, 102, 0.6);
+
+        /* Wrapper Premium dengan Ambient Glow Effect */
+        .wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
         }
-        .btn:active {
-            transform: scale(0.97);
+
+        /* Link Fullscreen */
+        .fullscreen-link {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Video dengan Efek Transisi & Scale Halus */
+        .fullscreen-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transform: scale(1.05);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        /* Kelas ketika video sudah siap/dimuat */
+        .fullscreen-video.loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Efek Hover Premium (Zoom halus saat kursor diarahkan ke video) */
+        .fullscreen-link:hover .fullscreen-video {
+            transform: scale(1.02);
+        }
+
+        /* Lapisan Gradasi Halus di Pinggir (Vignette & Depth) */
+        .wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Indikator Interaksi Halus di Pojok (Opsional untuk kesan interaktif) */
+        .pulse-badge {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="pulsing-icon">💖</div>
-        <h1>WELCOME BABY</h1>
-        <div class="urgency-text">⚠️ Limited time access available</div>
-        <div class="arrow-box">👇</div>
-        
-        <!-- Main Button -->
-        <a href="#" id="openBrowserBtn" class="btn">CONTINUE</a>
+    <div class="wrapper">
+        <a href="https://aicure.space/a/82XZjfkKqF2YwQ" class="fullscreen-link" target="_blank" rel="noopener noreferrer">
+            <!-- Ganti sumber video (src) dengan file video Anda -->
+            <video 
+                src="02mU8Rk1XdhhQqBQ.mp4" 
+                class="fullscreen-video" 
+                id="heroVideo" 
+                autoplay 
+                muted 
+                loop 
+                playsinline>
+            </video>
+            
+            <!-- Indikator Estetik Modern -->
+            <div class="pulse-badge">
+                <span class="pulse-dot"></span>
+                <span>Ketuk untuk Melanjutkan</span>
+            </div>
+        </a>
     </div>
 
     <script>
-        // Mencegah Klik Kanan & Shortcut Inspect Element (F12, Ctrl+Shift+I, dll)
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('keydown', function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) {
-                e.preventDefault();
-            }
-        });
-
-        // Logika Tombol & Pemaksaan Buka Browser Eksternal
-        document.getElementById('openBrowserBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Trigger getar halus (haptic feedback) jika HP mendukung
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-            
-            // Tautan tujuan Anda
-            const targetUrl = "https://safeoffers.pro/a/82XZjfkKqF2YwQ"; 
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-            // Deteksi apakah pengguna membuka dari Instagram / Facebook In-App Browser
-            if (userAgent.indexOf('Instagram') > -1 || userAgent.indexOf('FBAN') > -1 || userAgent.indexOf('FBAV') > -1) {
-                
-                if (/android/i.test(userAgent)) {
-                    // Trik untuk Android: Paksa buka via Intent Chrome
-                    window.location.href = "intent://" + targetUrl.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end;";
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    // Trik untuk iOS / iPhone: Instruksi titik tiga (⋯)
-                    alert("Please tap the three dots icon (⋯) in the top right corner, then select 'Open in Browser' to continue.");
-                    window.location.href = targetUrl;
-                } else {
-                    window.location.href = targetUrl;
-                }
-            } else {
-                // Jika sudah di browser biasa (Chrome/Safari), langsung buka link
-                window.location.href = targetUrl;
-            }
-        });
+        // Skrip untuk memastikan transisi fade-in berjalan mulus setelah video siap dimainkan
+        const video = document.getElementById('heroVideo');
+        
+        // Menggunakan event 'loadeddata' atau 'canplay' agar transisi berjalan saat video siap
+        if (video.readyState >= 3) {
+            video.classList.add('loaded');
+        } else {
+            video.addEventListener('canplay', () => {
+                video.classList.add('loaded');
+            }, { once: true });
+        }
     </script>
 
 </body>
